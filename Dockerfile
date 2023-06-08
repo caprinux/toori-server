@@ -7,9 +7,10 @@ RUN cd /tmp/libtins && git reset --hard b7e61f4c76ac64053c9c4c9f8eadaabbe3a9381a
     && make  \
     && make install
 RUN ldconfig
-RUN pip3 install toori-server --no-binary :all:
 RUN apt-get install -y iptables
+ADD ./iro /iro
 COPY ./docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
+RUN pip3 install /iro --no-binary :all:
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["80"]
